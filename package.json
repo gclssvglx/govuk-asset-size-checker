@@ -1,0 +1,10 @@
+{
+  "name": "govuk-asset-size-checker",
+  "version": "1.0.0",
+  "description": "GOV.UK asset size checker",
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "serverless-localstack": "^1.0.1"
+  }
+}

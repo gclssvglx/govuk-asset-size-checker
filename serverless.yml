@@ -1,0 +1,29 @@
+service: govuk-asset-size-checker
+
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+
+functions:
+  checker:
+    handler: handler.checker
+    events:
+      - schedule: rate(1 minute)
+
+plugins:
+  - serverless-localstack
+
+custom:
+  localstack:
+    stages:
+      - local
+    host: http://localhost
+    autostart: True
+    lambda:
+      # mountCode: True
+    docker:
+      sudo: False
+  stages:
+    local:
