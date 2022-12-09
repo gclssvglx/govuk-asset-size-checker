@@ -2,6 +2,12 @@
 
 ## Local development
 
+### Run LocalStack
+
+```shell
+docker-compose up
+```
+
 ### Deploy to LocalStack
 
 ```shell

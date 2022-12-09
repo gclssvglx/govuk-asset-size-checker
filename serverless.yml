@@ -4,13 +4,17 @@ frameworkVersion: '3'
 
 provider:
   name: aws
-  runtime: nodejs14.x
+  runtime: ruby2.7
 
 functions:
   checker:
     handler: handler.checker
-    events:
-      - schedule: rate(1 minute)
+    environment: ${file(env.json):local} # load env vars from `env.json`
+    # Note: this works, but does not output anything!
+    # events:
+    #   - schedule: rate(1 minute)
+
+useDotenv: true
 
 plugins:
   - serverless-localstack
@@ -20,6 +24,7 @@ custom:
     stages:
       - local
     host: http://localhost
+    edgePort: 4566
     autostart: True
     lambda:
       # mountCode: True
