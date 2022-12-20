@@ -1,4 +1,5 @@
 node_modules
+coverage
 .serverless
 env.json
 volume

@@ -19,3 +19,15 @@ sls deploy --stage local
 ```shell
 sls invoke -f checker --stage local
 ```
+
+### Testing
+
+```shell
+rspec
+```
+
+## TODO
+
+- Use an AWS database
+- Notifications - SQS, SNS, Slack, email?
+- Show the size in human-friendly format (10KB, not 1000)

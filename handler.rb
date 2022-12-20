@@ -1,28 +1,24 @@
-require "json"
-require "net/http"
+# frozen_string_literal: true
 
-require_relative "asset_checker"
+require_relative "src/asset_size_checker"
 
 def checker(event:, context:)
-  uri = URI(ENV["RESTDB_GET_URL"])
-  request = Net::HTTP::Get.new(uri)
-  request["Content-Type"] = "application/json"
-  request["x-apikey"] = ENV["RESTDB_API_KEY"]
+  checker = AssetSizeChecker.new(
+    Database.new(ENV["RESTDB_GET_URL"], ENV["RESTDB_API_KEY"]),
+    "assets.yml",
+    100
+  )
 
-  response = Net::HTTP.start(uri.hostname, uri.port, use_ssl: uri.scheme == 'https') do |http|
-    http.request(request)
-  end
-
-  file_sizes = JSON.parse response.body
   errors = []
-
-  file_sizes.each do |entry|
-    checker = AssetChecker.new(entry["url"], entry["file-size"])
-    errors << checker.report unless checker.size_matches?
+  begin
+    checker.check
+  rescue => error
+    errors << error.message
   end
 
   {
     status: 200,
+    body: checker.inspect,
     errors: errors
   }
 end

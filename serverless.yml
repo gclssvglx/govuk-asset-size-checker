@@ -20,6 +20,7 @@ plugins:
   - serverless-localstack
 
 custom:
+  tableName: ${self:service}-${sls:stage}
   localstack:
     stages:
       - local
